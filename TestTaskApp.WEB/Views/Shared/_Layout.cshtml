@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – Test task</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Ajax.ActionLink("Test task", "Index", "Home", new { }, new AjaxOptions { UpdateTargetId = "dataConteiner" },
+         new { @class = "navbar-brand" })
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        @Ajax.ActionLink("User profile", "Index", "UserProfile", new AjaxOptions { UpdateTargetId = "dataConteiner" })
+                    </li>
+                    <li>
+                        @Ajax.ActionLink("Group by manager", "Index", "ManagerStatistics", new AjaxOptions { UpdateTargetId = "dataConteiner" })
+                    </li>
+                    <li>
+                        @Ajax.ActionLink("Add User", "Create", "UserProfile", new AjaxOptions { UpdateTargetId = "dataConteiner" })
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="nav nav-tabs">
+        <div>
+            </div>
+        <div></div>
+    </div>
+
+    <div class="container body-content">
+        <div id="dataConteiner" class="row">
+            @RenderBody()
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year – Test task.</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ajax")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

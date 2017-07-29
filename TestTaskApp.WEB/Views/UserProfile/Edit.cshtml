@@ -1,0 +1,29 @@
+﻿@using TestTaskApp.WEB.Models
+
+@model UserProfileCUViewModel
+
+
+<h4>Edit the user profile.</h4>
+<div class="form-horizontal" role="form">
+
+    @using (Ajax.BeginForm("Edit", "Image", new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "dataConteiner"
+    }))
+    {
+        @Html.HiddenFor(m => m.Id)        
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <img src="@Url.Content(Model.ImagePath)" class="img-rounded" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <input type="submit" class="btn btn-default" value="Change the image" />
+            </div>
+        </div>
+    }
+</div>
+
+ @Html.EditorForModel()

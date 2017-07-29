@@ -1,0 +1,48 @@
+﻿@using TestTaskApp.WEB.Models
+@using TestTaskApp.BLL.Infranstructure;
+
+@using PagedList.Mvc
+
+
+@model ManagerStatisticsListViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            @foreach (SortParameter sp in Model.SortParameters)
+            {
+                <th>
+                    @Ajax.ActionLink(sp.FieldName, "Index", "ManagerStatistics", new { page = 1, FieldName = sp.FieldName, Type = sp.Type }, new AjaxOptions { UpdateTargetId = "dataConteiner" })
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ManagerStatisticsViewModel managerStatistics in Model.List)
+        {
+            <tr>
+                <td>@managerStatistics.Name</td>
+                <td>@managerStatistics.SubjectUserCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="col-md-10">
+    Page @(Model.List.PageCount < Model.List.PageNumber ? 0 : Model.List.PageNumber) of @Model.List.PageCount
+
+    @Html.PagedListPager(Model.List, page => Url.Action("Index", "Manager",
+        new
+        {
+            page = page,
+            FieldName = Model.currentSortParameter.FieldName,
+            Type = Model.currentSortParameter.Type
+        }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "dataConteiner"
+        }))
+</div>
+

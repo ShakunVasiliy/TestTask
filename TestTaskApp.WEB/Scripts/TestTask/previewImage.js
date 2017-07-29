@@ -1,0 +1,4 @@
+﻿function bindPreviewImage(inputId, imgId)
+{
+    
+}

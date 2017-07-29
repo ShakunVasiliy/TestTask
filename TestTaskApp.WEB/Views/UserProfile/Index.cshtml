@@ -1,0 +1,52 @@
+﻿@using TestTaskApp.WEB.Models
+@using TestTaskApp.BLL.Infranstructure;
+
+@using PagedList.Mvc
+
+@model UserProfileListViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            @foreach (SortParameter sp in Model.SortParameters)
+            {
+                <th>
+                    @Ajax.ActionLink(sp.FieldName, "Index", "UserProfile", new {page = 1, FieldName = sp.FieldName, Type = sp.Type }, new AjaxOptions { UpdateTargetId = "dataConteiner" })
+                </th>
+            }
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (UserProfileForListViewModel userProfile in Model.List)
+        {
+            <tr>
+                <td>@userProfile.Name</td>
+                <td>@userProfile.Email</td>
+                <td>@userProfile.Title</td>
+                <td>@userProfile.ManagerName</td>
+                <td>@Ajax.ActionLink("edit", "Edit", "UserProfile", new { id = userProfile.Id }, new AjaxOptions { UpdateTargetId = "dataConteiner" })</td>
+                <td>@Ajax.ActionLink("delete", "Delete", "UserProfile", new { id = userProfile.Id }, new AjaxOptions { UpdateTargetId = "dataConteiner" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="col-md-10">    
+    Page @(Model.List.PageCount < Model.List.PageNumber ? 0 : Model.List.PageNumber) of @Model.List.PageCount
+
+    @Html.PagedListPager(Model.List, page => Url.Action("Index", "UserProfile",
+        new
+        {
+            page = page ,
+            FieldName = Model.currentSortParameter.FieldName,
+            Type = Model.currentSortParameter.Type
+        }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "dataConteiner"
+        }))
+</div>
